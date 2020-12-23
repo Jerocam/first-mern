@@ -6,11 +6,16 @@ const path = require("path");
 const mongoose = require("mongoose");
 const port = process.env.PORT || 5000;
 
+require('dotenv').config();
+
 app.use(bodyParser.json());
 app.use(cors());
 
 //mongoose
-mongoose.connect("mongodb+srv://jerocam86:FovcFZv7NehrOhtn@cluster0.ywaif.mongodb.net/MoviesDB?retryWrites=true&w=majority")
+mongoose.connect(`mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}@cluster0.ywaif.mongodb.net/MoviesDB?retryWrites=true&w=majority`,(err)=>{
+    if(err) throw err;
+    console.log("DB Connected Successfully");
+})
 
 //data schema and model
 const movieSchema = {
@@ -46,7 +51,7 @@ app.delete('/delete/:id', function(req, res) {
     const id = req.params.id;
     Movie.findByIdAndDelete({_id: id}, function(err) {
         if(!err) {
-            console.log("movie deleted");
+            console.log("This Movie has been deleted!");
         } else {
             console.log(err);
         }
@@ -61,5 +66,5 @@ if(process.env.NODE_ENV === 'production') {
 }
 
 app.listen(port, function() {
-    console.log("express is running");
+    console.log("express is listening!");
 })

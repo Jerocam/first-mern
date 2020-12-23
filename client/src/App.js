@@ -1,5 +1,4 @@
 import {useState, useEffect} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from "axios";
 
@@ -42,14 +41,27 @@ function App() {
 
   function addMovie(e) {
     e.preventDefault();
-    alert("movie added");
-    const newMovie = {
-      title: movie.title,
-      genre: movie.genre,
-      year: movie.year
-    }
 
-    axios.post('/newmovie', newMovie);
+    let empt1 = document.forms["Form"]["title"].value;
+    let empt2 = document.forms["Form"]["genre"].value;
+    let empt3 = document.forms["Form"]["year"].value;
+
+    if (empt1 == null || empt1 === "" || empt2 == null || empt2 === ""|| empt3 == null || empt3 === "") {
+      alert("Please Fill All Required Field");
+      return false;
+    }
+    else if(isNaN(empt3)){
+      alert('Error, Please enter only number');
+    }
+    else {
+      alert("New Movie Added!");
+      const newMovie = {
+        title: movie.title,
+        genre: movie.genre,
+        year: movie.year
+      }
+      axios.post('/newmovie', newMovie);
+    }
   }
 
   function deleteMovie(id) {
@@ -59,24 +71,27 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Add Movie</h1>
-      <form>
-        <input onChange={handleChange} name="title" value={movie.title}></input>
-        <input onChange={handleChange} name="genre" value={movie.genre}></input>
-        <input onChange={handleChange} name="year" value={movie.year}></input>
-        <button onClick={addMovie}>ADD MOVIE</button>
+      <h1>MERN APPLICATION</h1>
+      <h2>Add Movie</h2>
+      <form name="Form">
+        <label>Title <input onChange={handleChange} name="title" value={movie.title} /></label>
+        <label>Genre <input onChange={handleChange} name="genre" value={movie.genre} className="rt"/></label>
+        <label>Year <input onChange={handleChange} name="year" value={movie.year} className="rt"/></label>
+        <button onClick={addMovie}>Add Movie</button>
       </form>
 
-      {movies.map(movie => {
+      <div className="grid-container">
+      {movies.map((movie, key) => {
         return (
-          <div>
-            <h1>{movie.title}</h1>
-            <p>{movie.genre}</p>
-            <p>{movie.year}</p>
-            <button onClick={() => deleteMovie(movie._id)}>DELETE</button>
-          </div>
+            <div key={key} className="grid-item">
+              <h3>{movie.title}</h3>
+              <p>{movie.genre}</p>
+              <p>{movie.year}</p>
+              <button onClick={() => deleteMovie(movie._id)} className="btnDel">Delete</button>
+            </div>
         ) 
       })}
+      </div>
     </div>
   );
 }
