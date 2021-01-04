@@ -16,5 +16,5 @@
     "express": "^4.17.1",
     "mongoose": "^5.10.15"
   },
-  "description": "first mern app to practice"
+  "description": "first mern app for testing and practicing"
 }

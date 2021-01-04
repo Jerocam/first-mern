@@ -14,7 +14,7 @@ app.use(cors());
 //mongoose
 mongoose.connect(`mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}@cluster0.ywaif.mongodb.net/MoviesDB?retryWrites=true&w=majority`,(err)=>{
     if(err) throw err;
-    console.log("DB Connected Successfully");
+    console.log("DB Connected Successfully!");
 })
 
 //data schema and model
