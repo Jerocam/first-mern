@@ -71,7 +71,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>MERN APPLICATION</h1>
+      <h1>Jerocam MERN Application</h1>
       <h2>Add Movie</h2>
       <form name="Form">
         <label>Title <input onChange={handleChange} name="title" value={movie.title} /></label>
